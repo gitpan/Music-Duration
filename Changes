@@ -1,0 +1,7 @@
+Revision history for Music-Duration
+
+0.01      2012-11-06 02:05:54 America/Los_Angeles
+    - Added to and corrected MIDI::Simple::Length.
+
+0.00_1 2012.11.5
+    - Unleashed by Dist::Zilla!
