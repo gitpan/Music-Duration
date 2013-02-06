@@ -3,14 +3,24 @@ use strict;
 use warnings;
 use Test::More;
 
-require_ok('MIDI::Simple');
-ok %MIDI::Simple::Length, 'MIDI::Simple::Length exists';
-is $MIDI::Simple::Length{dden}, '0.75', 'MIDI::Simple::Length dden typo';
-
 require_ok('Music::Duration');
-is $MIDI::Simple::Length{dden}, '0.875', 'dden fixed';
-is $MIDI::Simple::Length{yn}, '0.125', 'yn added';
-is $MIDI::Simple::Length{xn}, '0.0625', 'xn added';
+
+my %duration = (
+    # 32nd
+      yn => '0.1250',
+     dyn => '0.1875',
+    ddyn => '0.2188',
+     tyn => '0.0833',
+    # 64th
+      xn => '0.0625',
+     dxn => '0.0938',
+    ddxn => '0.1094',
+     txn => '0.0417',
+);
+
+for my $d (keys %duration) {
+    is sprintf( '%.4f', $MIDI::Simple::Length{$d} ), $duration{$d}, $d;
+}
 
 done_testing();
 
