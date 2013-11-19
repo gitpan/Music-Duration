@@ -5,6 +5,7 @@ META.json
 META.yml
 Makefile.PL
 README
+README.md
 dist.ini
 lib/Music/Duration.pm
 t/00-load.t

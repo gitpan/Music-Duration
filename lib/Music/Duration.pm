@@ -4,7 +4,7 @@ BEGIN {
 }
 # ABSTRACT: Thirtysecond and sixtyfourth notes
 
-our $VERSION = '0.02';
+our $VERSION = '0.0201';
 use strict;
 use warnings;
 
@@ -43,13 +43,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Music::Duration - Thirtysecond and sixtyfourth notes
 
 =head1 VERSION
 
-version 0.02
+version 0.0201
 
 =head1 SYNOPSIS
 
