@@ -2,9 +2,9 @@ package Music::Duration;
 BEGIN {
   $Music::Duration::AUTHORITY = 'cpan:GENE';
 }
-# ABSTRACT: Thirtysecond and sixtyfourth notes
+# ABSTRACT: Add useful note lengths to MIDI-Perl
 
-our $VERSION = '0.0201';
+our $VERSION = '0.03';
 use strict;
 use warnings;
 
@@ -12,10 +12,10 @@ use MIDI::Simple;
 
 
 {
-    # Set the initial duration.
-    my $last = 's'; # sixteenth
+    # Set the initial duration to one below 32nd,
+    my $last = 's'; # ..which is a sixteenth.
 
-    # Add 32nd and 64th
+    # Add 32nd and 64th as y and x.
     for my $duration (qw( y x )) {
         # Create a MIDI::Simple format note identifier.
         my $n = $duration . 'n';
@@ -37,6 +37,18 @@ use MIDI::Simple;
     }
 }
 
+
+sub fractional {
+    # Get the new name and the division factor.
+    my ($name, $factor) = @_;
+
+    # Add a named factor for each note value.
+    for my $n (keys %MIDI::Simple::Length) {
+        next if length $n > 2;
+        $MIDI::Simple::Length{$name . $n} = $MIDI::Simple::Length{$n} / $factor;
+    }
+}
+
 1;
 
 __END__
@@ -47,17 +59,26 @@ __END__
 
 =head1 NAME
 
-Music::Duration - Thirtysecond and sixtyfourth notes
+Music::Duration - Add useful note lengths to MIDI-Perl
 
 =head1 VERSION
 
-version 0.0201
+version 0.03
 
 =head1 SYNOPSIS
 
-  perl -MMIDI::Simple -MData::Dumper -e'print Dumper \%MIDI::Simple::Length'
+  # Compare:
+  > perl -MMIDI::Simple -MData::Dumper -e'print Dumper \%MIDI::Simple::Length'
+  > perl -MMusic::Duration -MData::Dumper -e'print Dumper \%MIDI::Simple::Length'
 
-  perl -MMusic::Duration -MData::Dumper -e'print Dumper \%MIDI::Simple::Length'
+  # In a program:
+  use MIDI::Simple;
+  use Music::Duration;
+  Music::Duration::fractional('z', 5);
+  new_score();
+  patch_change(1, 33);          # Jazz kit
+  n('zsn', 'n38') for 1 .. 5;   # Snare sixteenth quintuplet
+  n('qn', 'n38');
 
 =head1 DESCRIPTION
 
@@ -66,7 +87,18 @@ These are 32nd: y, dy, ddy, ty and 64th: x, dx, ddx, tx.
 
 =head1 NAME
 
-Music::Duration - Thirtysecond and sixtyfourth notes
+Music::Duration - Add useful note lengths to MIDI-Perl
+
+=head1 FUNCTIONS
+
+=head2 fractional()
+
+  $z = Music::Duration::fractional('z', 5)
+
+Add a fractional duration-division for each note, to the L<MIDI::Simple>
+C<Length> hash.
+
+In the example above, we add z-notes, or 5th quarter note divisions
 
 =head1 TO DO
 

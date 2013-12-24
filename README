@@ -1,9 +1,9 @@
 
 
 This archive contains the distribution Music-Duration,
-version 0.0201:
+version 0.03:
 
-  Thirtysecond and sixtyfourth notes
+  Add useful note lengths to MIDI-Perl
 
 This software is copyright (c) 2013 by Gene Boggs.
 

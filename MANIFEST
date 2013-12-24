@@ -8,6 +8,11 @@ README
 README.md
 dist.ini
 lib/Music/Duration.pm
+t/00-compile.t
 t/00-load.t
 t/01-methods.t
 t/author-pod-spell.t
+t/release-eol.t
+t/release-no-tabs.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
