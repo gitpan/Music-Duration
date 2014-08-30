@@ -2,9 +2,9 @@ package Music::Duration;
 BEGIN {
   $Music::Duration::AUTHORITY = 'cpan:GENE';
 }
-# ABSTRACT: Add useful note lengths to MIDI-Perl
+# ABSTRACT: Add 32nd, 64th & odd fractional durations to MIDI-Perl
 
-our $VERSION = '0.03';
+our $VERSION = '0.0301';
 use strict;
 use warnings;
 
@@ -44,7 +44,9 @@ sub fractional {
 
     # Add a named factor for each note value.
     for my $n (keys %MIDI::Simple::Length) {
+        # Skip durations longer than a single note.
         next if length $n > 2;
+        # Add the fractional note value to the Lengths.
         $MIDI::Simple::Length{$name . $n} = $MIDI::Simple::Length{$n} / $factor;
     }
 }
@@ -59,11 +61,11 @@ __END__
 
 =head1 NAME
 
-Music::Duration - Add useful note lengths to MIDI-Perl
+Music::Duration - Add 32nd, 64th & odd fractional durations to MIDI-Perl
 
 =head1 VERSION
 
-version 0.03
+version 0.0301
 
 =head1 SYNOPSIS
 
@@ -82,12 +84,11 @@ version 0.03
 
 =head1 DESCRIPTION
 
-This module adds thirtysecond and sixtyfourth note divisions to L<MIDI::Simple>.
-These are 32nd: y, dy, ddy, ty and 64th: x, dx, ddx, tx.
+This module adds thirty-second and sixty-fourth note divisions to
+L<MIDI::Simple>.  (These are 32nd: y, dy, ddy, ty and 64th: x, dx, ddx, tx.)
 
-=head1 NAME
-
-Music::Duration - Add useful note lengths to MIDI-Perl
+Also, this module allows the addition of non-standard note divisions with the
+<fractional> function, below.
 
 =head1 FUNCTIONS
 
@@ -98,7 +99,8 @@ Music::Duration - Add useful note lengths to MIDI-Perl
 Add a fractional duration-division for each note, to the L<MIDI::Simple>
 C<Length> hash.
 
-In the example above, we add z-notes, or 5th quarter note divisions
+In the example above, we add 5th note divisions called "z-notes" to the existing
+lengths.
 
 =head1 TO DO
 
@@ -120,7 +122,7 @@ Gene Boggs <gene@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Gene Boggs.
+This software is copyright (c) 2014 by Gene Boggs.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
